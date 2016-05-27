@@ -1,0 +1,3 @@
+---
+- name: copy conf
+  copy: src=/opt/xxxx.conf dest=/etc/zabbix/includes owner=zabbix group=zabbix mode=0755

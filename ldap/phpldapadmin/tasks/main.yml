@@ -1,0 +1,13 @@
+---
+
+- name: Run the phpldapadmin container
+  docker:
+    name: phpldapadmin
+    image: osixia/phpldapadmin:0.6.8
+    restart_policy: always
+    state: running
+    links: 
+    - openldap:openldap
+    env: PHPLDAPADMIN_LDAP_HOSTS=openldap
+    ports:
+    - "6443:443"

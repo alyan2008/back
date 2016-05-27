@@ -1,0 +1,16 @@
+---
+
+- name: installing MySQL package
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - "{{mysql_package_client}}"
+    - "{{mysql_package_server}}"
+    - python-mysqldb
+  tags: [mysql]
+
+- name: installing MySQL tools
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - mysqltuner
+    - percona-toolkit
+  tags: [mysql,mysql-tools]

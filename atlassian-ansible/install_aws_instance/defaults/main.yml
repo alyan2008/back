@@ -1,0 +1,8 @@
+---
+
+project_name: "atlassian"
+env: "staging" # env name, this will be used as an inventory file name
+app_code_user: "ubuntu" # remote user
+aws_region: eu-central-1 # AWS region, where instance will be created
+instance_type: t2.micro  # AWS instance type
+ami: ami-b83c0aa5  # AMI id, example uses Ubuntu 14.04.1 LTS

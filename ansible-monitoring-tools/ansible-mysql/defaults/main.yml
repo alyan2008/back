@@ -1,0 +1,88 @@
+---
+
+# MySQL Packages
+mysql_package_client: mysql-client
+mysql_package_server: mysql-server
+
+# MySQL users
+mysql_user_home: /root
+mysql_root_username: root
+mysql_root_password: Gfhjkm1
+
+# MySQL Configuration
+mysql_configuration: /etc/mysql/my.cnf
+mysql_includedir: /etc/mysql/conf.d/
+
+# [client]
+mysql_client_port: 3306
+mysql_client_socket: /var/run/mysqld/mysqld.sock
+
+# [mysqld]
+mysql_mysqld_safe_socket: /var/run/mysqld/mysqld.sock
+mysql_mysqld_safe_nice: 0
+
+mysql_mysqld_user: mysql
+mysql_mysqld_pid_file: /var/run/mysqld/mysqld.pid
+mysql_mysqld_socket: /var/run/mysqld/mysqld.sock
+mysql_mysqld_port: 3306
+mysql_mysqld_basedir: /usr
+mysql_mysqld_datadir: /var/lib/mysql
+mysql_mysqld_tmpdir: /tmp
+mysql_mysqld_skip_external_locking: True
+mysql_mysqld_bind_address: 127.0.0.1
+mysql_mysqld_key_buffer: 16M
+mysql_mysqld_max_allowed_packet: 16M
+mysql_mysqld_thread_stack: 192K
+mysql_mysqld_thread_cache_size: 8
+mysql_mysqld_myisam_recover: BACKUP
+mysql_mysqld_max_connections: 1000
+mysql_mysqld_query_cache_limit: 1M
+mysql_mysqld_query_cache_size: 16M
+mysql_mysqld_general_log_file: /var/log/mysql/mysql.log
+mysql_mysqld_general_log: 0
+mysql_mysqld_slow_query_log: 0
+mysql_mysqld_slow_query_log_file: /var/log/mysql/mysql-slow.log
+mysql_mysqld_long_query_time: 1
+mysql_mysqld_log_queries_not_using_indexes: False
+mysql_mysqld_default_storage_engine: InnoDB
+
+# InnoDB tuning
+mysql_mysqld_innodb_buffer_pool_size: 128M
+mysql_mysqld_innodb_log_file_size: 128M
+mysql_mysqld_innodb_log_buffer_size: 8M
+mysql_mysqld_innodb_thread_concurrency: 64
+mysql_mysqld_innodb_read_io_threads: 16
+mysql_mysqld_innodb_write_io_threads: 16
+mysql_mysqld_innodb_file_per_table: 1
+mysql_mysqld_innodb_open_files: 400
+mysql_mysqld_innodb_io_capacity: 600
+mysql_mysqld_innodb_lock_wait_timeout: 60
+mysql_mysqld_innodb_flush_method: O_DIRECT
+mysql_mysqld_innodb_doublewrite: 0
+mysql_mysqld_innodb_use_native_aio: 0
+
+# Replication
+mysql_enable_replication: False
+mysql_mysqld_server_id: 1
+mysql_mysqld_log_bin: /var/log/mysql/mysql-bin.log
+mysql_mysqld_expire_logs_days: 10
+mysql_mysqld_max_binlog_size: 100M
+mysql_mysqld_binlog_do_db:
+mysql_mysqld_binlog_ignore_db: 
+
+# mysqldump
+mysql_enable_mysqldump: True
+mysql_mysqldump_max_allowed_packet: 16M
+
+# myisam
+mysql_isamchk_key_buffer: 16M
+
+# Databases
+# mysql_databases:
+#   - { name: example, collation: utf8_general_ci, encoding: utf8, replicate: 1 }
+mysql_databases: []
+
+# Users
+# mysql_users:
+#   - { name: example, host: 127.0.0.1, password: secret, priv: *.*:USAGE }
+mysql_users: []

@@ -1,0 +1,6 @@
+---
+- hosts: ldap
+  roles:
+#    - role: grafana
+    - role: influxdb
+#    - role: fluentd-server

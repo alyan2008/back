@@ -1,0 +1,13 @@
+---
+- name: Install nginx
+  apt: name=nginx state=present
+
+- name: Copy nginx configuration for icinga2
+  template: src=icinga2.conf dest=/etc/nginx/sites-available/icinga2.conf
+
+- name: Create symlink
+  file: src=/etc/nginx/sites-available/icinga2.conf dest=/etc/nginx/sites-enabled/icinga2.conf state=link
+
+- name: disable default nginx conf
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify: restart nginx

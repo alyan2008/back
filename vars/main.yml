@@ -1,0 +1,8 @@
+domain: "icekernel.com"
+HASHED_PASSWD_ROOT: "{SSHA}ggn4jMK7/HkNYxMfqAwzFiubrYRc9ccx"
+HASHED_PASSWD_USER: "{SSHA}yR3m519qy2S5mzhGzZATy+cfBFBeVJVp"
+PASSWD_ROOT: "password_for_the_root"
+username: "ldapuser"
+fullname: "ldapuser"
+surname: "ldapuser"
+email: "ldapuser@icekernel.com"

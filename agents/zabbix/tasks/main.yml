@@ -1,0 +1,12 @@
+---
+- name: Run the Zabbix-agent container
+  docker:
+    name: zabbix-agent-xxl
+    image: monitoringartist/zabbix-agent-xxl-limited:latest
+    restart_policy: always
+    state: running
+    env: 
+    - ZA_Server={{ server }}
+    ports:
+    - "10050:10050"    
+    

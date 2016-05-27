@@ -1,0 +1,19 @@
+---
+
+#- name: Download influxdb
+#  get_url: url=https://s3.amazonaws.com/influxdb/influxdb_0.9.6-rc2_amd64.deb dest=/tmp
+
+#- name: Install influxdb
+#  apt: deb=/tmp/influxdb_0.9.6-rc2_amd64.deb
+
+#- name: Start the InfluxDB service
+#  service: name=influxdb state=restarted
+
+#- name: create databases NginxError
+#  command: /usr/bin/influx -host 127.0.0.1 -execute 'CREATE DATABASE NginxError'
+
+#- name: create databases NginxAccess
+#  command: /usr/bin/influx -host 127.0.0.1 -execute 'CREATE DATABASE NginxAccess'
+
+- name: Create user for Grafana and Fluentd
+  command: /usr/bin/influx -host 127.0.0.1 -execute "CREATE USER fluentd WITH PASSWORD 'fluentd'"

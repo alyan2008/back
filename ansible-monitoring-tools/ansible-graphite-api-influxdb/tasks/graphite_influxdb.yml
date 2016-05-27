@@ -1,0 +1,10 @@
+---
+
+- name: install graphite_influxdb via graphite-api's own pip
+  pip:
+    name='{{ graphite_api_influxdb_archive_url }}'
+    virtualenv=/usr/share/python/graphite
+    state=present
+
+  notify:
+  - restart graphite-api

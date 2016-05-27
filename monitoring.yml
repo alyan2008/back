@@ -1,0 +1,35 @@
+---
+- hosts: monitoring_servers
+  roles:
+    - role: ansible-mysql
+    - role: ansible-nginx
+    - role: ansible-php-fpm
+    - role: ansible-icinga2-no-ui
+      icinga2_conf_global: |
+        include "constants.conf"
+        include "zones.conf"
+        include <itl>
+        include <plugins>
+        include "features-enabled/*.conf"
+        include_recursive "conf.d"
+      check_commands:
+        check_nrpe: |
+           "-H", "$address$",
+               "-c", "$remote_nrpe_command$",
+      tags: icinga2-no-ui
+
+    - role: ansible-icinga2-web2-ui
+      icinga2_web2_db_pass: "icinga"
+      icinga2_ido_mysql_configuration: |
+        library "db_ido_mysql"
+
+        object IdoMysqlConnection "ido-mysql" {
+          user = "{{ icinga2_web2_db_user }}"
+          password = "{{ icinga2_web2_db_pass }}"
+          host = "localhost"
+          database = "{{ icinga2_web2_db }}"
+        }
+      tags: icinga2-ansible-web2-ui
+#    - role: ansible-influxdb
+#    - role: ansible-graphite-api-influxdb  
+#    - role: ansible-grafana

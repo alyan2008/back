@@ -1,0 +1,8 @@
+---
+
+- name: Upload conf to zabbix agent
+  hosts: 'zabbix'
+#  sudo: 
+  roles:
+      - { role: zabbix_conf, tags: ["zabbix_conf"] }
+

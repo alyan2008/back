@@ -1,0 +1,10 @@
+---
+- name: Run the Grafana container
+  docker:
+    name: grafana
+    image: grafana/grafana
+    restart_policy: always
+    state: running
+    ports:
+    - "3000:3000"    
+    

@@ -1,0 +1,45 @@
+---
+
+#- name: setting MySQL configuration
+#  template: src=my.cnf.j2 dest="{{mysql_configuration}}" owner=root group=root mode=0640 backup=yes
+#  notify:
+#    - restart mysql
+#  tags: [mysql]
+
+- name: ensure MySQL is started and enabled on boot
+  service: name=mysql state=started enabled=yes
+  tags: [mysql]
+
+- name: check if ~/.my.cnf file already exists
+  stat: "path={{ mysql_user_home }}/.my.cnf"
+  register: mycnf_file
+  tags: [mysql]
+
+- name: update MySQL root password for all root accounts
+  mysql_user:
+    name: "root"
+    host: "{{ item }}"
+    password: "{{ mysql_root_password }}"
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+  when: mycnf_file.stat.exists == false
+  tags: [mysql]
+
+- name: copy .my.cnf file with root password credentials
+  template:
+    src: "home_my.cnf.j2"
+    dest: "{{ mysql_user_home }}/.my.cnf"
+    owner: root
+    group: root
+    mode: 0600
+  tags: [mysql]
+
+- name: remove anonymous MySQL user
+  mysql_user: "name='' state=absent"
+  tags: [mysql]
+
+- name: remove MySQL test database
+  mysql_db: "name='test' state=absent"
+  tags: [mysql]

@@ -1,0 +1,8 @@
+---
+- hosts: servers
+  roles:
+    - role: ansible-zabbix-api
+#    - role: grafana
+#    - role: influxdb
+#    - { role: fluentd-server, influxdb: 127.0.0.1}
+#    - { role: nginx, domain: }

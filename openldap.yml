@@ -1,0 +1,4 @@
+---
+- hosts: ldap
+  roles:
+    - role: ansible-zabbix-api

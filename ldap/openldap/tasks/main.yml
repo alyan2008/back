@@ -1,0 +1,74 @@
+---
+
+- name: OpenLDAP data container
+  docker:
+    name: openldap-data
+    image: busybox
+    state: present
+    volumes:
+    - /var/lib/ldap
+    - /etc/openldap/slapd.d
+
+- name: Openldap volume
+  docker:
+    image: centos:7
+    volumes_from:
+    - openldap-data
+    command: yum install -y openldap-servers
+
+- name: run the openldap container
+  docker:
+    name: openldap
+    image: blowb/openldap
+    restart_policy: always
+    state: running
+    volumes_from:
+    - openldap-data
+    env: MAX_NOFILE=8192
+    ports:
+    - "389:389"    
+    
+- name: Copy scripts to remote host
+  template: src={{ item }} dest=/tmp/ mode=0777
+  with_items:
+    - change_the_database.sh
+    - update_root_pass.sh
+    - add_domain_and_organization.sh
+    - add_user.sh
+    - add_group.sh
+    - add_memberOf_overlay.sh
+
+- name: Copy scripts to container
+  shell: docker cp /tmp/{{ item }} openldap:/tmp
+  with_items:
+    - change_the_database.sh
+    - update_root_pass.sh
+    - add_domain_and_organization.sh
+    - add_user.sh
+    - add_group.sh
+    - add_memberOf_overlay.sh
+
+- name: Update ldap database
+  shell: docker exec openldap /tmp/change_the_database.sh
+
+- name: Update the pass
+  shell: docker exec openldap /tmp/update_root_pass.sh
+
+- name: Add some basic schemata
+  shell: docker exec openldap ldapadd -H ldapi:/// -f /etc/openldap/schema/{{ item }}
+  with_items:
+  - cosine.ldif
+  - inetorgperson.ldif
+
+- name: Add domain and organization
+  shell: docker exec openldap /tmp/add_domain_and_organization.sh
+
+- name: Add new user
+  shell: docker exec openldap /tmp/add_user.sh
+
+- name: Add new group
+  shell: docker exec openldap /tmp/add_group.sh
+
+- name: Add memberOf overlay
+  shell: docker exec openldap /tmp/add_memberOf_overlay.sh
+

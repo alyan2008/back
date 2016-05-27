@@ -1,0 +1,10 @@
+2016-02-06 10:39:36,244 p=33483 u=root |   
+2016-02-06 10:39:36,244 p=33483 u=root |  /usr/local/bin/ansible-playbook jira-stash.yml -l local
+2016-02-06 10:39:36,244 p=33483 u=root |   
+2016-02-06 10:39:36,247 p=33483 u=root |   [WARNING]: provided hosts list is empty, only localhost is available
+
+2016-02-06 10:39:36,291 p=33483 u=root |  PLAY [Install Stash Jira] ***************************************************** 
+2016-02-06 10:39:36,292 p=33483 u=root |  GATHERING FACTS *************************************************************** 
+2016-02-06 10:39:36,778 p=33483 u=root |  ok: [localhost]
+2016-02-06 10:39:36,779 p=33483 u=root |  TASK: [ansible-jira | Download Jira] ****************************************** 
+2016-02-06 10:39:45,728 p=33483 u=root |  ERROR: interrupted

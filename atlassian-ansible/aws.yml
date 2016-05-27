@@ -1,0 +1,14 @@
+---
+- hosts: local
+  roles:
+    - role: install_aws_instance
+
+
+#---
+#- hosts: local
+#  roles:
+#        - install_aws_instance
+
+#- hosts: testserver
+#  roles:
+#   - ansible-jira

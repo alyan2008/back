@@ -1,0 +1,62 @@
+---
+- name: Create a new api EC2 instance
+  hosts: localhost
+  gather_facts: False
+  vars:
+    keypair: ansible
+    instance_type: t2.small
+    security_group: icekernel-vpc-www-ssh
+    image: ami-5189a661
+    region: us-west-2
+    vpc_subnet: d8b36981
+    name_tag: api01
+  tasks:
+#    - name: Create security group
+#      module: ec2_group
+#      name: api-core
+#      description: "api-core"
+#      region: "{{ec2_region}}"
+#      rules:
+#        - proto: tcp
+#          type: ssh
+#          from_port: 22
+#          to_port: 22
+#          cidr_ip: 0.0.0.0/0
+#      rules_egress:
+#        - proto: all
+#          type: all
+#          cidr_ip: 0.0.0.0/0
+#      register: basic_firewall
+    - name: Launch instance
+      ec2:
+         key_name: "{{ keypair }}"
+         group: "{{ security_group }}"
+         instance_type: "{{ instance_type }}"
+         image: "{{ image }}"
+         wait: true
+         region: "{{ region }}"
+         vpc_subnet_id: "{{ vpc_subnet }}"
+         assign_public_ip: yes
+         instance_tags:
+           Name: "{{ name_tag }}"
+      register: ec2
+
+    - name: Add new instance to proper ansible group
+      add_host: hostname={{name_tag}} groupname=api-servers ansible_ssh_host={{ item.private_ip }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/Users/grig.gheorghiu/.ssh/api.pem
+      with_items: ec2.instances
+
+    - name: Wait for SSH to come up
+      wait_for: host={{ item.private_ip }} port=22  search_regex=OpenSSH delay=210 timeout=420 state=started
+      with_items: ec2.instances
+
+#- name: Configure api EC2 instance
+#  hosts: api-servers
+#  sudo: True
+#  gather_facts: True
+#  roles:
+#    - base
+#    - tuning
+#    - postfix
+#    - monitoring
+#    - nginx
+#    - api

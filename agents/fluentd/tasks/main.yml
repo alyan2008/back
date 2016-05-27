@@ -1,0 +1,16 @@
+---
+
+- name: Install fluntd
+  shell: curl -L https://toolbelt.treasuredata.com/sh/install-ubuntu-trusty-td-agent2.sh | sh
+
+- name: Create conf directory
+  file: path=/etc/td-agent/conf.d state=directory mode=0775
+
+- name: Copy conf file to fluentd
+  template: src=nginx.conf dest=/etc/td-agent/conf.d mode=0755
+
+- name: Change fluentd conf file
+  lineinfile: dest=/etc/td-agent/td-agent.conf line="@include conf.d/*.conf"
+
+- name: Restart fluentd service
+  service: name=td-agent state=restarted

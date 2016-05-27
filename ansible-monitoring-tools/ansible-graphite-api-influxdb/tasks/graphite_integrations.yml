@@ -1,0 +1,18 @@
+---
+
+- name: Install git
+  apt: name=git state=present
+
+- git: repo=https://github.com/findmypast/icingaweb2-module-graphite.git dest=/usr/share/icingaweb2/modules/graphite refspec=+refs/pull/*:refs/heads/*
+
+- replace: dest=/usr/share/icingaweb2/modules/graphite/library/Graphite/Grapher.php regexp="^protected $baseUrl" replace="protected $baseUrl = \'http://{{ ansible_eth0.ipv4.address }}:8888/render?\';"
+
+- name: Copy Grapher.php configuration for icinga module
+  template: src=Grapher.j2 dest=/usr/share/icingaweb2/modules/graphite/library/Graphite/Grapher.php
+
+- name: Enable Icinga2 Graphite Feature
+  command: "icinga2 feature enable graphite"
+  register: features_result
+  changed_when: "'for these changes to take effect' in features_result.stdout"
+  notify:
+   - restart icinga2

@@ -1,0 +1,6 @@
+---
+# tasks file for icinga2-ansible-web2-ui
+
+- include: icinga2_web2_ui.yml
+- include: configuration_files.yml
+#  when: ansible_os_family == 'Ubuntu'

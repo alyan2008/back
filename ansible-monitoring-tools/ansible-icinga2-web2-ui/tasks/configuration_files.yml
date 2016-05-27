@@ -1,0 +1,32 @@
+- name: Copy resources.ini
+  template: src=resources.ini dest=/etc/icingaweb2/resources.ini
+
+- name: Copy config.ini
+  template: src=config.ini dest=/etc/icingaweb2/config.ini
+
+- name: Copy authentication.ini
+  template: src=authentication.ini dest=/etc/icingaweb2/authentication.ini
+
+- name: Copy roles.ini
+  template: src=roles.ini dest=/etc/icingaweb2/roles.ini
+
+- name: Create monitoring directory
+  file: path=/etc/icingaweb2/modules/monitoring state=directory owner=www-data group=www-data mode=0775 recurse=yes
+
+- name: Copy config.ini
+  template: src=monitoring/config.ini dest=/etc/icingaweb2/modules/monitoring/config.ini
+
+- name: Copy backends.ini
+  template: src=monitoring/backends.ini dest=/etc/icingaweb2/modules/monitoring/backends.ini
+
+- name: Copy commandtransports.ini
+  template: src=monitoring/commandtransports.ini dest=/etc/icingaweb2/modules/monitoring/commandtransports.ini
+
+- name: restart nginx
+  service: name=nginx state=restarted enabled=yes
+
+- name: restart icinga2
+  service: name=icinga2
+           state=restarted
+           enabled=yes
+

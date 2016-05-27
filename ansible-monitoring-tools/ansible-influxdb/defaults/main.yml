@@ -1,0 +1,25 @@
+---
+
+influxdb_version: 0.9.5
+influxdb_download_url: http://s3.amazonaws.com/influxdb
+
+#dirs
+influxdb_meta_dir: /var/lib/influxdb/meta
+influxdb_data_dir: /var/lib/influxdb/data
+influxdb_wal_dir: /var/lib/influxdb/wal
+influxdb_hh_dir: /var/lib/influxdb/hh
+
+#meta
+influxdb_reporting_disabled: false
+influxdb_hostname: localhost
+influxdb_bind_address: :8088
+
+#retention
+influxdb_retention_enabled: true
+
+#admin
+influxdb_admin_enabled: true
+influxdb_admin_bind_address: :8083
+
+#graphite
+influxdb_graphite_config:

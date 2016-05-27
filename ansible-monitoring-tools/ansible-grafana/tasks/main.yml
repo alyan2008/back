@@ -1,0 +1,22 @@
+---
+
+- name: download grafana
+  get_url: url=https://grafanarel.s3.amazonaws.com/builds/grafana_2.6.0_amd64.deb dest=/tmp/grafana_2.6.0_amd64.deb
+
+- name: Install adduser libfontconfig
+  apt: name={{item}} state=installed
+  with_items:
+    - adduser 
+    - libfontconfig
+
+- name: install grafana
+  apt: deb="/tmp/grafana_2.6.0_amd64.deb"
+
+- name: Copy grafana.ini
+  template: src=grafana.ini dest=/etc/grafana/grafana.ini
+
+- name: Start grafana
+  service:
+    name: grafana-server
+    state: started
+

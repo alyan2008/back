@@ -1,0 +1,10 @@
+[Rancher]
+rancher ansible_ssh_host=192.168.253.134
+
+[zabbix]
+atlassian ansible_ssh_host=192.168.253.134
+
+
+[nodes:children]
+Rancher
+zabbix

@@ -1,0 +1,9 @@
+---
+ - name: Install Stash Jira
+   hosts: localhost
+   user: ubuntu
+   sudo: yes
+   roles:
+#     - ansible-jira
+#     - ansible-stash
+     - ansible-nginx
